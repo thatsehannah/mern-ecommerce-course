@@ -1,6 +1,6 @@
-import asyncHandler from 'express-async-handler';
-import User from '../models/userModel.js';
-import generateToken from '../utils/generateToken.js';
+import asyncHandler from "express-async-handler";
+import User from "../models/userModel.js";
+import generateToken from "../utils/generateToken.js";
 
 // @desc      Register new user
 // @route     POST /api/users/
@@ -12,7 +12,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (userExist) {
     res.status(400);
-    throw new Error('User already exists');
+    throw new Error("User already exists");
   }
 
   // the create method is syntatic sugar for the '.save' method in the userSchema.pre() method in userModel
@@ -32,7 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error('Invalid user data');
+    throw new Error("Invalid user data");
   }
 });
 
@@ -54,7 +54,7 @@ const authUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error('Invalid email or password');
+    throw new Error("Invalid email or password");
   }
 });
 
@@ -73,7 +73,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 });
 
@@ -100,7 +100,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
 });
 
