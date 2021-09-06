@@ -17,9 +17,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // the create method is syntatic sugar for the '.save' method in the userSchema.pre() method in userModel
   const user = await User.create({
-    name,
-    email,
-    password,
+    name: name,
+    email: email,
+    password: password,
   });
 
   if (user) {
