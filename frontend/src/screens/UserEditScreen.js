@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { getUserDetails } from '../actions/adminActions';
+import { getUserProfileAsAdmin } from '../actions/adminActions';
 
 const UserEditScreen = ({ match, history }) => {
   const userId = match.params.id;
@@ -17,11 +17,11 @@ const UserEditScreen = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, user } = useSelector((state) => state.userDetails);
+  const { loading, error, user } = useSelector((state) => state.userProfile);
 
   useEffect(() => {
     if(!user.name || user._id !== userId){
-      dispatch(getUserDetails(userId))
+      dispatch(getUserProfileAsAdmin(userId))
     } else {
       setName(user.name)
       setEmail(user.email)

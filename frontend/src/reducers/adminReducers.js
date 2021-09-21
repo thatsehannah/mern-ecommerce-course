@@ -15,15 +15,15 @@ export const adminListUsersReducer = (state = { users: [] }, action) => {
   }
 };
 
-export const userDetailsReducer = (state = { user: {} }, action) => {
+export const userProfileReducer = (state = { user: {} }, action) => {
   switch (action.type) {
-    case admin.USER_DETAILS_REQUEST:
+    case admin.USER_PROFILE_REQUEST:
       return { ...state, loading: true };
-    case admin.USER_DETAILS_SUCCESS:
+    case admin.USER_PROFILE_SUCCESS:
       return { loading: false, user: action.payload };
-    case admin.USER_DETAILS_FAIL:
+    case admin.USER_PROFILE_FAIL:
       return { loading: false, error: action.payload };
-    case admin.USER_DETAILS_RESET:
+    case admin.USER_PROFILE_RESET:
       return { user: {} };
     default:
       return state;

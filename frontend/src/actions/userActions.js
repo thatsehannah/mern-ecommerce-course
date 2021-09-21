@@ -78,10 +78,10 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserProfile = () => async (dispatch, getState) => {
   try {
     dispatch({
-      type: user.USER_DETAILS_REQUEST,
+      type: user.USER_PROFILE_REQUEST,
     });
 
     const {
@@ -95,15 +95,15 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`/api/users/profile`, config);
 
     dispatch({
-      type: user.USER_DETAILS_SUCCESS,
+      type: user.USER_PROFILE_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: user.USER_DETAILS_FAIL,
+      type: user.USER_PROFILE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -129,7 +129,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`/api/users/profile`, user, config);
+    const { data } = await axios.put(`/api/users/${user._id}/profile`, user, config);
 
     dispatch({
       type: user.USER_UPDATE_PROFILE_SUCCESS,
@@ -152,7 +152,7 @@ export const logout = () => (dispatch) => {
     type: user.USER_LOGOUT,
   });
   dispatch({
-    type: user.USER_DETAILS_RESET,
+    type: user.USER_PROFILE_RESET,
   });
   dispatch({
     type: ORDER_USER_LIST_RESET,

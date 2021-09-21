@@ -67,10 +67,10 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 };
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserProfileAsAdmin = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: admin.USER_DETAILS_REQUEST,
+      type: admin.USER_PROFILE_REQUEST,
     });
 
     const {
@@ -87,12 +87,12 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     const { data } = await axios.get(`/api/admin/users/${id}`, config);
 
     dispatch({
-      type: admin.USER_DETAILS_SUCCESS,
+      type: admin.USER_PROFILE_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: admin.USER_DETAILS_FAIL,
+      type: admin.USER_PROFILE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

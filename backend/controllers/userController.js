@@ -58,7 +58,7 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc      Get user profile
+// @desc      Get logged in user profile
 // @route     GET /api/users/profile
 // @access    Private
 const getUserProfile = asyncHandler(async (req, res) => {
