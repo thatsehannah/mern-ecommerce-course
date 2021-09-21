@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { getUserDetails } from '../actions/userActions';
+import { getUserDetails } from '../actions/adminActions';
 
 const UserEditScreen = ({ match, history }) => {
   const userId = match.params.id;
