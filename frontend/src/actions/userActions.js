@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as user from '../constants/userConstants';
 import { ORDER_USER_LIST_RESET } from '../constants/orderConstants';
-import { USER_LIST_RESET } from '../constants/adminConstants';
+import { ADMIN_USER_LIST_RESET } from '../constants/adminConstants';
 
 export const register = (name, email, password) => async (dispatch) => {
   try {
@@ -158,6 +158,6 @@ export const logout = () => (dispatch) => {
     type: ORDER_USER_LIST_RESET,
   });
   dispatch({
-    type: USER_LIST_RESET,
+    type: ADMIN_USER_LIST_RESET,
   });
 };

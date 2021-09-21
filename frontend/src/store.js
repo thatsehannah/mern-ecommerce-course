@@ -15,7 +15,8 @@ import {
 import {
   adminListUsersReducer,
   adminDeleteUserReducer,
-  adminUpdateUserReducer,
+  adminUserProfileReducer,
+  adminUpdateUserProfileReducer
 } from './reducers/adminReducers';
 import {
   orderCreateReducer,
@@ -38,7 +39,8 @@ const reducer = combineReducers({
   orderUserList: orderUserListReducer,
   adminListUsers: adminListUsersReducer,
   adminDeleteUser: adminDeleteUserReducer,
-  adminUpdateUser: adminUpdateUserReducer,
+  adminUpdateUserProfile: adminUpdateUserProfileReducer,
+  adminUserProfile: adminUserProfileReducer
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

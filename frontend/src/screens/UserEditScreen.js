@@ -7,9 +7,9 @@ import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import {
   getUserProfileAsAdmin,
-  updateUserAsAdmin,
+  updateUserProfileAsAdmin,
 } from '../actions/adminActions';
-import { UPDATE_USER_RESET } from '../constants/adminConstants';
+import { ADMIN_UPDATE_USER_PROFILE_RESET } from '../constants/adminConstants';
 
 const UserEditScreen = ({ match, history }) => {
   const userId = match.params.id;
@@ -20,19 +20,22 @@ const UserEditScreen = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, user } = useSelector((state) => state.userProfile);
+  const { loading, error, user } = useSelector(
+    (state) => state.adminUserProfile
+  );
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
-  } = useSelector((state) => state.adminUpdateUser);
+  } = useSelector((state) => state.adminUpdateUserProfile);
 
   useEffect(() => {
     if (successUpdate) {
-      dispatch({ type: UPDATE_USER_RESET });
+      dispatch({ type: ADMIN_UPDATE_USER_PROFILE_RESET });
       history.push('/admin/userlist');
     } else {
       if (!user.name || user._id !== userId) {
+        console.log(user);
         dispatch(getUserProfileAsAdmin(userId));
       } else {
         setName(user.name);
@@ -45,7 +48,7 @@ const UserEditScreen = ({ match, history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      updateUserAsAdmin({
+      updateUserProfileAsAdmin({
         _id: userId,
         name: name,
         email: email,
