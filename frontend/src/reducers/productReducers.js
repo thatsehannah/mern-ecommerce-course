@@ -29,4 +29,19 @@ export const productItemReducer = (
   }
 };
 
+export const productReviewCreateReducer = (state = { }, action) => {
+  switch (action.type) {
+    case product.PRODUCT_CREATE_REVIEW_REQUEST:
+      return { loading: true };
+    case product.PRODUCT_CREATE_REVIEW_FETCHED:
+      return { loading: false, success: true };
+    case product.PRODUCT_CREATE_REVIEW_FAIL:
+      return { loading: false, error: action.payload };
+    case product.PRODUCT_CREATE_REVIEW_RESET:
+      return {}
+    default:
+      return state;
+  }
+};
+
 

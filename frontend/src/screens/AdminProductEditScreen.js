@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { listProduct } from '../actions/productActions';
+import { getProductDetails } from '../actions/productActions';
 import { updateProduct } from '../actions/adminActions';
 import { ADMIN_PRODUCT_CREATE_RESET } from '../constants/adminConstants';
 
@@ -37,7 +37,7 @@ const AdminProductEditScreen = ({ match, history }) => {
       history.push('/admin/productlist');
     } else {
       if (!product.name || product._id !== productId) {
-        dispatch(listProduct(productId));
+        dispatch(getProductDetails(productId));
       } else {
         setName(product.name);
         setPrice(product.price);

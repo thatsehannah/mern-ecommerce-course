@@ -2,6 +2,8 @@ import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import Order from '../models/orderModel.js';
 
+//------------ADMIN USERS METHODS------------\\
+
 // @desc      Get all users
 // @route     GET /api/admin/users
 // @access    Private/Admin
@@ -64,6 +66,8 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
+//------------ADMIN PRODUCTS METHODS------------\\
+
 // @desc      Delete a single product
 // @route     DELETE /api/admin/products/:id
 // @access    Private/Admin
@@ -124,6 +128,8 @@ const updateProduct = asyncHandler(async (req, res) => {
     throw new Error('Product not found');
   }
 });
+
+//------------ADMIN ORDERS METHODS------------\\
 
 // @desc      Get all orders
 // @route     GET /api/admin/orders
