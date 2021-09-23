@@ -22,7 +22,7 @@ export const listProducts = () => async (dispatch) => {
   }
 };
 
-export const showProduct = (id) => async (dispatch) => {
+export const listProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: product.PRODUCT_ITEM_REQUEST });
 
@@ -46,7 +46,7 @@ export const showProduct = (id) => async (dispatch) => {
 export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: product.ADMIN_PRODUCT_DELETE_REQUEST
+      type: product.ADMIN_PRODUCT_DELETE_REQUEST,
     });
 
     const {
@@ -67,6 +67,77 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: product.ADMIN_PRODUCT_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const createProduct = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: product.ADMIN_PRODUCT_CREATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/products`, {}, config);
+
+    dispatch({
+      type: product.ADMIN_PRODUCT_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: product.ADMIN_PRODUCT_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateProduct = (updatedProduct) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: product.ADMIN_PRODUCT_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/products/${updatedProduct._id}`,
+      updatedProduct,
+      config
+    );
+
+    dispatch({
+      type: product.ADMIN_PRODUCT_UPDATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: product.ADMIN_PRODUCT_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

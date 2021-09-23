@@ -13,14 +13,14 @@ import {
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { showProduct } from '../actions/productActions';
+import { listProduct } from '../actions/productActions';
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(showProduct(match.params.id));
+    dispatch(listProduct(match.params.id));
   }, [dispatch, match]);
 
   const addToCartHandler = () => {
