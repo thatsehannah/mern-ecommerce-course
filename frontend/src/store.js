@@ -4,9 +4,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   productListReducer,
   productItemReducer,
-  adminProductDeleteReducer,
-  adminProductCreateReducer,
-  adminProductUpdateReducer
 } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
 import {
@@ -20,6 +17,10 @@ import {
   adminDeleteUserReducer,
   adminUserProfileReducer,
   adminUpdateUserProfileReducer,
+  adminProductDeleteReducer,
+  adminProductCreateReducer,
+  adminProductUpdateReducer,
+  adminListOrdersReducer,
 } from './reducers/adminReducers';
 import {
   orderCreateReducer,
@@ -43,6 +44,7 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderpPayReducer,
   orderUserList: orderUserListReducer,
+  adminListOrders: adminListOrdersReducer,
   adminListUsers: adminListUsersReducer,
   adminDeleteUser: adminDeleteUserReducer,
   adminUpdateUserProfile: adminUpdateUserProfileReducer,

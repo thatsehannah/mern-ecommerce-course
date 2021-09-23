@@ -29,45 +29,4 @@ export const productItemReducer = (
   }
 };
 
-export const adminProductDeleteReducer = (state = {}, action) => {
-  switch (action.type) {
-    case product.ADMIN_PRODUCT_DELETE_REQUEST:
-      return { loading: true };
-    case product.ADMIN_PRODUCT_DELETE_SUCCESS:
-      return { loading: false, success: true };
-    case product.ADMIN_PRODUCT_DELETE_FAIL:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
 
-export const adminProductCreateReducer = (state = {}, action) => {
-  switch (action.type) {
-    case product.ADMIN_PRODUCT_CREATE_REQUEST:
-      return { loading: true };
-    case product.ADMIN_PRODUCT_CREATE_SUCCESS:
-      return { loading: false, success: true, createdProduct: action.payload };
-    case product.ADMIN_PRODUCT_CREATE_FAIL:
-      return { loading: false, error: action.payload };
-    case product.ADMIN_PRODUCT_CREATE_RESET:
-      return {};
-    default:
-      return state;
-  }
-};
-
-export const adminProductUpdateReducer = (state = { updatedProduct: {}}, action) => {
-  switch (action.type) {
-    case product.ADMIN_PRODUCT_UPDATE_REQUEST:
-      return { loading: true };
-    case product.ADMIN_PRODUCT_UPDATE_SUCCESS:
-      return { loading: false, success: true, updatedProduct: action.payload };
-    case product.ADMIN_PRODUCT_UPDATE_FAIL:
-      return { loading: false, error: action.payload };
-    case product.ADMIN_PRODUCT_UPDATE_RESET:
-      return { updatedProduct: {}};
-    default:
-      return state;
-  }
-};

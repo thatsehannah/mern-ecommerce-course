@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
-import { listProduct, updateProduct } from '../actions/productActions';
-import { ADMIN_PRODUCT_CREATE_RESET } from '../constants/productConstants';
+import { listProduct } from '../actions/productActions';
+import { updateProduct } from '../actions/adminActions';
+import { ADMIN_PRODUCT_CREATE_RESET } from '../constants/adminConstants';
 
-const ProductEditScreen = ({ match, history }) => {
+const AdminProductEditScreen = ({ match, history }) => {
   const productId = match.params.id;
 
   const [name, setName] = useState('');
@@ -183,4 +184,4 @@ const ProductEditScreen = ({ match, history }) => {
   );
 };
 
-export default ProductEditScreen;
+export default AdminProductEditScreen;

@@ -11,7 +11,7 @@ import {
 } from '../actions/adminActions';
 import { ADMIN_UPDATE_USER_PROFILE_RESET } from '../constants/adminConstants';
 
-const UserEditScreen = ({ match, history }) => {
+const AdminUserEditScreen = ({ match, history }) => {
   const userId = match.params.id;
 
   const [name, setName] = useState('');
@@ -108,4 +108,4 @@ const UserEditScreen = ({ match, history }) => {
   );
 };
 
-export default UserEditScreen;
+export default AdminUserEditScreen;

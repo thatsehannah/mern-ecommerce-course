@@ -1,5 +1,7 @@
 import * as admin from '../constants/adminConstants';
 
+//------------ADMIN USER REDUCERS------------\\
+
 export const adminListUsersReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case admin.ADMIN_USER_LIST_REQUEST:
@@ -53,6 +55,66 @@ export const adminUpdateUserProfileReducer = (state = { user: {} }, action) => {
       return { loading: false, error: action.payload };
     case admin.ADMIN_UPDATE_USER_PROFILE_RESET:
       return { user: {} };
+    default:
+      return state;
+  }
+};
+
+//------------ADMIN PRODUCT REDUCERS------------\\
+
+export const adminProductDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case admin.ADMIN_PRODUCT_DELETE_REQUEST:
+      return { loading: true };
+    case admin.ADMIN_PRODUCT_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case admin.ADMIN_PRODUCT_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const adminProductCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case admin.ADMIN_PRODUCT_CREATE_REQUEST:
+      return { loading: true };
+    case admin.ADMIN_PRODUCT_CREATE_SUCCESS:
+      return { loading: false, success: true, createdProduct: action.payload };
+    case admin.ADMIN_PRODUCT_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case admin.ADMIN_PRODUCT_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const adminProductUpdateReducer = (state = { updatedProduct: {}}, action) => {
+  switch (action.type) {
+    case admin.ADMIN_PRODUCT_UPDATE_REQUEST:
+      return { loading: true };
+    case admin.ADMIN_PRODUCT_UPDATE_SUCCESS:
+      return { loading: false, success: true, updatedProduct: action.payload };
+    case admin.ADMIN_PRODUCT_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case admin.ADMIN_PRODUCT_UPDATE_RESET:
+      return { updatedProduct: {}};
+    default:
+      return state;
+  }
+};
+
+//------------ADMIN ORDERS REDUCERS------------\\
+
+export const adminListOrdersReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case admin.ADMIN_ORDER_LIST_REQUEST:
+      return { loading: true };
+    case admin.ADMIN_ORDER_LIST_SUCCESS:
+      return { loading: false, orders: action.payload };
+    case admin.ADMIN_ORDER_LIST_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

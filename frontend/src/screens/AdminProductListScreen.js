@@ -4,14 +4,11 @@ import { Table, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import {
-  listProducts,
-  deleteProduct,
-  createProduct,
-} from '../actions/productActions';
-import { ADMIN_PRODUCT_CREATE_RESET } from '../constants/productConstants';
+import { listProducts } from '../actions/productActions';
+import { createProduct, deleteProduct } from '../actions/adminActions';
+import { ADMIN_PRODUCT_CREATE_RESET } from '../constants/adminConstants';
 
-const ProductListScreen = ({ history, match }) => {
+const AdminProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const { loading, error, products } = useSelector(
@@ -126,4 +123,4 @@ const ProductListScreen = ({ history, match }) => {
   );
 };
 
-export default ProductListScreen;
+export default AdminProductListScreen;
