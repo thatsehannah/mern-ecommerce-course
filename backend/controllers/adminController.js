@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import Order from '../models/orderModel.js';
+import Product from '../models/productModel.js';
 
 //------------ADMIN USERS METHODS------------\\
 
@@ -68,6 +69,29 @@ const updateUser = asyncHandler(async (req, res) => {
 
 //------------ADMIN PRODUCTS METHODS------------\\
 
+// @desc      Get all products
+// @route     GET /api/admin/products
+// @access    Private/Admin
+const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
+
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
+});
+
 // @desc      Delete a single product
 // @route     DELETE /api/admin/products/:id
 // @access    Private/Admin
@@ -91,7 +115,7 @@ const createProduct = asyncHandler(async (req, res) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
-    image: 'images/sample.jpeg',
+    image: '/images/sample.jpeg',
     brand: 'Sample brand',
     category: 'Sample category',
     countInStock: 0,
@@ -164,6 +188,7 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  getProducts,
   deleteProductById,
   createProduct,
   updateProduct,

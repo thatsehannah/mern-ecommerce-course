@@ -4,15 +4,17 @@ import { Table, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listProducts } from '../actions/productActions';
+import Paginate from '../components/Paginate';
+import { listProducts } from '../actions/adminActions';
 import { createProduct, deleteProduct } from '../actions/adminActions';
 import { ADMIN_PRODUCT_CREATE_RESET } from '../constants/adminConstants';
 
 const AdminProductListScreen = ({ history, match }) => {
+  const pageNumber = match.params.p || 1
   const dispatch = useDispatch();
 
-  const { loading, error, products } = useSelector(
-    (state) => state.productList
+  const { loading, error, products, page, pages } = useSelector(
+    (state) => state.adminProductList
   );
 
   const {
@@ -39,7 +41,7 @@ const AdminProductListScreen = ({ history, match }) => {
     if (successCreate) {
       history.push(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      dispatch(listProducts());
+      dispatch(listProducts("", pageNumber));
     }
   }, [
     dispatch,
@@ -48,6 +50,7 @@ const AdminProductListScreen = ({ history, match }) => {
     successDelete,
     successCreate,
     createdProduct,
+    pageNumber
   ]);
 
   const createProductHandler = () => {
@@ -81,6 +84,7 @@ const AdminProductListScreen = ({ history, match }) => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
+        <>
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -118,6 +122,8 @@ const AdminProductListScreen = ({ history, match }) => {
             ))}
           </tbody>
         </Table>
+        <Paginate pages={pages} page={page} isAdmin={true} />
+        </>
       )}
     </>
   );

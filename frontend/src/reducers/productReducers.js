@@ -5,7 +5,12 @@ export const productListReducer = (state = { products: [] }, action) => {
     case product.PRODUCT_LIST_REQUEST:
       return { loading: true, products: [] };
     case product.PRODUCT_LIST_FETCHED:
-      return { loading: false, products: action.payload };
+      return {
+        loading: false,
+        products: action.payload.products,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      };
     case product.PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:
@@ -29,7 +34,7 @@ export const productItemReducer = (
   }
 };
 
-export const productReviewCreateReducer = (state = { }, action) => {
+export const productReviewCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case product.PRODUCT_CREATE_REVIEW_REQUEST:
       return { loading: true };
@@ -38,10 +43,8 @@ export const productReviewCreateReducer = (state = { }, action) => {
     case product.PRODUCT_CREATE_REVIEW_FAIL:
       return { loading: false, error: action.payload };
     case product.PRODUCT_CREATE_REVIEW_RESET:
-      return {}
+      return {};
     default:
       return state;
   }
 };
-
-

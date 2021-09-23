@@ -146,6 +146,42 @@ export const getUserProfileAsAdmin = (id) => async (dispatch, getState) => {
 
 //------------ADMIN PRODUCT ACTIONS------------\\
 
+export const listProducts =
+  (keyword = '', pageNumber = '') =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({ type: admin.ADMIN_PRODUCT_LIST_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `/api/admin/products?keyword=${keyword}&pageNumber=${pageNumber}`,
+        config
+      );
+
+      dispatch({
+        type: admin.ADMIN_PRODUCT_LIST_FETCHED,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: admin.ADMIN_PRODUCT_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
 export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({

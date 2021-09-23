@@ -38,11 +38,17 @@ function App() {
           <Route path='/admin/userlist' component={AdminUserListScreen} />
           <Route path='/admin/order/:id' component={AdminOrderScreen} />
           <Route path='/admin/orderlist' component={AdminOrderListScreen} />
-          <Route path='/admin/productlist' component={AdminProductListScreen} />
+          <Route path='/admin/productlist' component={AdminProductListScreen} exact />
+          <Route path='/admin/productlist/:p' component={AdminProductListScreen} exact/>
           <Route path='/admin/user/:id/edit' component={AdminUserEditScreen} />
-          <Route path='/admin/product/:id/edit' component={AdminProductEditScreen} />
-          <Route path='/search/:keyword' component={HomeScreen} />
+          <Route
+            path='/admin/product/:id/edit'
+            component={AdminProductEditScreen}
+          />
+          <Route path='/search/:keyword' component={HomeScreen} exact />
           {/* Search Box ^^^^^^ */}
+          <Route path='/page/:p' component={HomeScreen} exact/>
+          <Route path='/search/:keyword/page/:p' component={HomeScreen} exact />
           <Route path='/' component={HomeScreen} exact />
         </Container>
       </main>

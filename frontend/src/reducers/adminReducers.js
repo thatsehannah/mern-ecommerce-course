@@ -62,6 +62,24 @@ export const adminUpdateUserProfileReducer = (state = { user: {} }, action) => {
 
 //------------ADMIN PRODUCT REDUCERS------------\\
 
+export const adminProductListReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case admin.ADMIN_PRODUCT_LIST_REQUEST:
+      return { loading: true, products: [] };
+    case admin.ADMIN_PRODUCT_LIST_FETCHED:
+      return {
+        loading: false,
+        products: action.payload.products,
+        pages: action.payload.pages,
+        page: action.payload.page,
+      };
+    case admin.ADMIN_PRODUCT_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const adminProductDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case admin.ADMIN_PRODUCT_DELETE_REQUEST:
