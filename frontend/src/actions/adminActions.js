@@ -69,41 +69,46 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 };
 
-export const updateUserProfileAsAdmin = (user) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: admin.ADMIN_UPDATE_USER_PROFILE_REQUEST,
-    });
+export const updateUserProfileAsAdmin =
+  (user) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: admin.ADMIN_UPDATE_USER_PROFILE_REQUEST,
+      });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    const { data } = await axios.put(`/api/admin/users/${user._id}`, user, config);
+      const { data } = await axios.put(
+        `/api/admin/users/${user._id}`,
+        user,
+        config
+      );
 
-    dispatch({ type: admin.ADMIN_UPDATE_USER_PROFILE_SUCCESS });
+      dispatch({ type: admin.ADMIN_UPDATE_USER_PROFILE_SUCCESS });
 
-    dispatch({
-      type: USER_UPDATE_PROFILE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: admin.ADMIN_UPDATE_USER_PROFILE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      dispatch({
+        type: USER_UPDATE_PROFILE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: admin.ADMIN_UPDATE_USER_PROFILE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const getUserProfileAsAdmin = (id) => async (dispatch, getState) => {
   try {
@@ -157,7 +162,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/products/${id}`, config);
+    await axios.delete(`/api/admin/products/${id}`, config);
 
     dispatch({
       type: admin.ADMIN_PRODUCT_DELETE_SUCCESS,
@@ -189,7 +194,7 @@ export const createProduct = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/products`, {}, config);
+    const { data } = await axios.post(`/api/admin/products`, {}, config);
 
     dispatch({
       type: admin.ADMIN_PRODUCT_CREATE_SUCCESS,
@@ -224,7 +229,7 @@ export const updateProduct = (updatedProduct) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/products/${updatedProduct._id}`,
+      `/api/admin/products/${updatedProduct._id}`,
       updatedProduct,
       config
     );
@@ -279,3 +284,40 @@ export const listOrders = () => async (dispatch, getState) => {
   }
 };
 
+export const deliverOrder = (order) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: admin.ADMIN_ORDER_DELIVER_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/admin/orders/${order._id}/deliver`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: admin.ADMIN_ORDER_DELIVER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: admin.ADMIN_ORDER_DELIVER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

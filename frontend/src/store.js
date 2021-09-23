@@ -21,6 +21,7 @@ import {
   adminProductCreateReducer,
   adminProductUpdateReducer,
   adminListOrdersReducer,
+  adminOrderDeliverReducer
 } from './reducers/adminReducers';
 import {
   orderCreateReducer,
@@ -45,6 +46,7 @@ const reducer = combineReducers({
   orderPay: orderpPayReducer,
   orderUserList: orderUserListReducer,
   adminListOrders: adminListOrdersReducer,
+  adminOrderDeliver: adminOrderDeliverReducer,
   adminListUsers: adminListUsersReducer,
   adminDeleteUser: adminDeleteUserReducer,
   adminUpdateUserProfile: adminUpdateUserProfileReducer,

@@ -65,7 +65,7 @@ const updateUser = asyncHandler(async (req, res) => {
 });
 
 // @desc      Delete a single product
-// @route     DELETE /api/products/:id
+// @route     DELETE /api/admin/products/:id
 // @access    Private/Admin
 const deleteProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
@@ -80,7 +80,7 @@ const deleteProductById = asyncHandler(async (req, res) => {
 });
 
 // @desc      Create a single product
-// @route     POST /api/products
+// @route     POST /api/admin/products
 // @access    Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
@@ -100,7 +100,7 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 // @desc      Update a product
-// @route     PUT /api/products/:id
+// @route     PUT /api/admin/products/:id
 // @access    Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
   const { name, price, description, image, brand, category, countInStock } =
@@ -126,12 +126,31 @@ const updateProduct = asyncHandler(async (req, res) => {
 });
 
 // @desc      Get all orders
-// @route     GET /api/orders
+// @route     GET /api/admin/orders
 // @access    Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({}).populate('user', 'id name');
 
   res.json(orders);
+});
+
+// @desc      Updated order to delivered
+// @route     PUT /api/admin/orders/:id/
+// @access    Private/Admin
+const updateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updatedOrder = await order.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found.');
+  }
 });
 
 export {
@@ -143,4 +162,5 @@ export {
   createProduct,
   updateProduct,
   getOrders,
+  updateOrderToDelivered
 };

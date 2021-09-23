@@ -1,17 +1,23 @@
 import React, { useEffect } from 'react';
-import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getOrderDetails} from '../actions/orderActions';
+import { getOrderDetails } from '../actions/orderActions';
+import { deliverOrder } from '../actions/adminActions';
+import { ADMIN_ORDER_DELIVER_RESET } from '../constants/adminConstants';
 
-const AdminOrderScreen = ({ match }) => {
+const AdminOrderScreen = ({ match, history }) => {
   const orderId = match.params.id;
 
   const dispatch = useDispatch();
 
+  const { userInfo } = useSelector((state) => state.userLogin);
   const { order, loading, error } = useSelector((state) => state.orderDetails);
+  const { loading: loadingDeliver, success: successDeliver } = useSelector(
+    (state) => state.adminOrderDeliver
+  );
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -24,10 +30,19 @@ const AdminOrderScreen = ({ match }) => {
   }
 
   useEffect(() => {
-    if (!order || order._id !== orderId) {
+    if (!userInfo) {
+      history.push('/login');
+    }
+
+    if (!order || successDeliver || order._id !== orderId) {
+      dispatch({ type: ADMIN_ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
     }
-  }, [dispatch, orderId, order]);
+  }, [dispatch, orderId, order, successDeliver, history, userInfo]);
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
+  };
 
   return (
     <>
@@ -144,6 +159,18 @@ const AdminOrderScreen = ({ match }) => {
                       <Col>${order.totalPrice}</Col>
                     </Row>
                   </ListGroup.Item>
+                  {loadingDeliver && <Loader />}
+                  {order && !order.isDelivered && (
+                    <ListGroup.Item>
+                      <Button
+                        type='button'
+                        className='btn btn-block'
+                        onClick={deliverHandler}
+                      >
+                        Mark As Delivered
+                      </Button>
+                    </ListGroup.Item>
+                  )}
                 </ListGroup>
               </Card>
             </Col>
